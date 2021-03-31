@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guigui.boot.dao.AuthorMapper">
+    <!--<resultMap id="dept" type="com.guigui.boot.bean.Article">-->
+        <!--<result column="deptno" property="deptno"></result>-->
+        <!--<result column="dname" property="dname"></result>-->
+        <!--<result column="loc" property="loc"></result>-->
+    <!--</resultMap>-->
+    <sql id="base-columns">
+        uid,username,password,number,last_date
+    </sql>
+    <update id="updateAuthorById">
+        update blog.author
+        set
+        <trim  suffixOverrides="," >
+            <if test='username != null and username != "" '>
+                username = #{username},
+            </if>
+            <if test='password != null and password!= "" '>
+                password= #{password},
+            </if>
+            <if test='number!=null and number!= "" '>
+                number= #{number},
+            </if>
+            <if test='lastDate!=null and lastDate!= "" '>
+                last_date= #{lastDate},
+            </if>
+        </trim>
+        where uid=#{uid}
+    </update>
+    <delete id="deleteAuthorById">
+        delete from blog.author
+        <if test="id != null and id != ''">
+            where uid = #{id}
+        </if>
+    </delete>
+
+    <select id="getList" resultType="Author">
+        select
+        <include refid="base-columns"></include>
+        from author
+    </select>
+    <select id="getAuthorById" resultType="Author">
+        select
+        <include refid="base-columns"></include>
+        from author
+        <where>
+            <if test="id != null and id != ''">
+                uid = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+        </where>
+    </select>
+    <insert id="addAuthor" parameterType="Author" useGeneratedKeys="true"
+    keyProperty="uid" keyColumn="uid">
+      INSERT  INTO blog.author (username,password,number,last_date)
+      VALUES (#{username},#{password},#{number},#{lastDate})
+    </insert>
+</mapper>

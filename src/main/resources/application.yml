@@ -1,0 +1,24 @@
+server:
+  port: 9999
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true #开启页面表单的Rest功能
+  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  output:
+    ansi:
+      enabled: detect #控制台彩色打印
+#  mvc:
+#    static-path-pattern: /res/**
+#  resources:
+#    static-locations: /hehe
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:mybatis-config.xml
+  type-aliases-package: com.guigui.boot.bean
